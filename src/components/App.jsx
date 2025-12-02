@@ -1,12 +1,13 @@
-import './App.css'
+import ImageLibrary from "./ImageLibrary";
+
 
 function App() {
 
   return (
     <>
       <div>
-
-      </div>
+      <ImageLibrary />
+    </div>
     </>
   )
 }
