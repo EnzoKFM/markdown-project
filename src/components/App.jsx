@@ -1,14 +1,14 @@
-import './App.css'
+import MarkdownEditor from "./MarkdownEditor"
 
 function App() {
 
-  return (
-    <>
-      <div>
-
-      </div>
-    </>
-  )
+    return (
+        <>
+            <div>
+                <MarkdownEditor />
+            </div>
+        </>
+    )
 }
 
 export default App
