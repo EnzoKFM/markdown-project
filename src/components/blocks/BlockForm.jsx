@@ -50,7 +50,7 @@ function BlockForm({ onSubmit }) {
             <textarea
               value={content}
               onChange={(e) => setContent(e.target.value)}
-              placeholder="Contenu markdown ou HTML..."
+              placeholder="Contenu markdown et/ou HTML..."
               rows={12}
               className="w-full px-3 py-2 border border-gray-300 rounded-md font-mono text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 resize-y"
             />
