@@ -19,6 +19,7 @@ function BlockLibrary() {
       id: crypto.randomUUID(),
       name: data.name,
       content: data.content,
+      shortcut: data.shortcut || null,
       createdAt: new Date().toISOString(),
     };
 
@@ -58,11 +59,12 @@ function BlockLibrary() {
       {editingBlock ? (
         <BlockEdit
           block={editingBlock}
+          blocks={blocks}
           onSave={handleUpdateBlock}
           onCancel={handleCancelEditBlock}
         />
       ) : (
-        <BlockForm onSubmit={handleAddBlock} />
+        <BlockForm onSubmit={handleAddBlock} blocks={blocks} />
       )}
 
       <div className="mt-8">

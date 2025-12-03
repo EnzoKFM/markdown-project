@@ -1,21 +1,70 @@
 import { useState } from "react";
 import { marked } from "marked";
+import ShortCut from "./ShortCut";
 
-function BlockEdit({ block, onSave, onCancel }) {
+function BlockEdit({ block, onSave, onCancel, blocks = [] }) {
   const [name, setName] = useState(block.name);
   const [content, setContent] = useState(block.content);
+  const [shortcut, setShortcut] = useState(
+    block.shortcut || {
+      key: "",
+      ctrlKey: false,
+      altKey: false,
+      shiftKey: false,
+    }
+  );
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!name.trim() || !content.trim()) return;
 
+    if (
+      shortcut.key === "" &&
+      (shortcut.ctrlKey || shortcut.altKey || shortcut.shiftKey)
+    ) {
+      alert("Vous devez choisir une touche pour le raccourci");
+      return;
+    }
+
+    if (
+      shortcut.key != "" &&
+      !shortcut.ctrlKey &&
+      !shortcut.altKey &&
+      !shortcut.shiftKey
+    ) {
+      alert("Vous devez choisir un raccourci avec la touche principale");
+      return;
+    }
+
+    if (findDuplicateShortCut) {
+      alert(
+        "Ce raccourci est déjà utilisé par le bloc " +
+          findDuplicateShortCut.name
+      );
+      return;
+    }
+
     onSave({
       ...block,
       name,
       content,
+      shortcut: shortcut.key ? shortcut : null,
       updatedAt: new Date().toISOString(),
     });
   };
+
+  const findDuplicateShortCut = blocks.find((b) => {
+    if (b.id === block.id) return false;
+
+    if (!b.shortcut || !b.shortcut.key) return false;
+
+    return (
+      shortcut.key === b.shortcut.key &&
+      shortcut.ctrlKey === b.shortcut.ctrlKey &&
+      shortcut.altKey === b.shortcut.altKey &&
+      shortcut.shiftKey === b.shortcut.shiftKey
+    );
+  });
 
   const getPreview = () => {
     if (!content.trim())
@@ -42,6 +91,13 @@ function BlockEdit({ block, onSave, onCancel }) {
           className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
       </div>
+
+      <ShortCut
+        shortcut={shortcut}
+        onChange={setShortcut}
+        blocks={blocks}
+        currentBlockId={block.id}
+      />
 
       <div className="mb-4">
         <label className="block text-sm font-medium text-gray-700 mb-2">

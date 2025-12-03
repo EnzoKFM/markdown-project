@@ -6,10 +6,28 @@ function BlockItem({ block, onDelete, onEdit }) {
     return marked.parse(content);
   };
 
+  const getShortCutPreview = (sc) => {
+    if (!sc || !sc.key) return null;
+    const parts = [];
+    if (sc.ctrlKey) parts.push("Ctrl");
+    if (sc.altKey) parts.push("Alt");
+    if (sc.shiftKey) parts.push("Shift");
+    parts.push(sc.key.toUpperCase());
+    return parts.join(" + ");
+  };
+
   return (
     <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
       <div className="flex justify-between items-center mb-4">
-        <h3 className="text-lg font-semibold">{block.name}</h3>
+        <div>
+          <h3 className="text-lg font-semibold">{block.name}</h3>
+
+          {getShortCutPreview(block.shortcut) && (
+            <span className="inline-block mt-1 text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded font-mono">
+              ⌨️ {getShortCutPreview(block.shortcut)}
+            </span>
+          )}
+        </div>
         <div className="flex gap-2">
           <button
             onClick={() => onEdit(block)}

@@ -1,17 +1,58 @@
 import { useState } from "react";
 import { marked } from "marked";
+import ShortCut from "./ShortCut";
 
-function BlockForm({ onSubmit }) {
+function BlockForm({ onSubmit, blocks = [] }) {
   const [name, setName] = useState("");
   const [content, setContent] = useState("");
+  const [shortcut, setShortcut] = useState({
+    key: "",
+    ctrlKey: false,
+    altKey: false,
+    shiftKey: false,
+  });
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!name.trim() || !content.trim()) return;
 
-    onSubmit({ name, content });
+    console.log(shortcut);
+
+    if (
+      shortcut.key === "" &&
+      (shortcut.ctrlKey || shortcut.altKey || shortcut.shiftKey)
+    ) {
+      alert("Vous devez choisir une touche pour le raccourci");
+      return;
+    }
+
+    if (
+      shortcut.key != "" &&
+      !shortcut.ctrlKey &&
+      !shortcut.altKey &&
+      !shortcut.shiftKey
+    ) {
+      alert("Vous devez choisir un raccourci avec la touche principale");
+      return;
+    }
+
+    if (findDuplicateShortCut) {
+      alert(
+        "Ce raccourci est déjà utilisé par le bloc " +
+          findDuplicateShortCut.name
+      );
+      return;
+    }
+
+    onSubmit({ name, content, shortcut: shortcut.key ? shortcut : null });
     setName("");
     setContent("");
+    setShortcut({
+      key: "",
+      ctrlKey: false,
+      altKey: false,
+      shiftKey: false,
+    });
   };
 
   const getPreview = () => {
@@ -19,6 +60,17 @@ function BlockForm({ onSubmit }) {
       return "<p class='text-gray-400'>La prévisualisation apparaîtra ici...</p>";
     return marked.parse(content);
   };
+
+  const findDuplicateShortCut = blocks.find((block) => {
+    if (!block.shortcut || !block.shortcut.key) return false;
+
+    return (
+      shortcut.key === block.shortcut.key &&
+      shortcut.ctrlKey === block.shortcut.ctrlKey &&
+      shortcut.altKey === block.shortcut.altKey &&
+      shortcut.shiftKey === block.shortcut.shiftKey
+    );
+  });
 
   return (
     <form
@@ -39,6 +91,13 @@ function BlockForm({ onSubmit }) {
           className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
       </div>
+
+      <ShortCut
+        shortcut={shortcut}
+        onChange={setShortcut}
+        blocks={blocks}
+        currentBlockId={null}
+      />
 
       <div className="mb-4">
         <label className="block text-sm font-medium text-gray-700 mb-2">
