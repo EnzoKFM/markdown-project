@@ -6,6 +6,7 @@ import BlockEdit from "./BlockEdit";
 function BlockLibrary() {
   const [blocks, setBlocks] = useState([]);
   const [editingBlock, setEditingBlock] = useState(null);
+  const [selectedBlocks, setSelectedBlocks] = useState([]);
 
   useEffect(() => {
     const saved = localStorage.getItem("blocks");
@@ -32,6 +33,9 @@ function BlockLibrary() {
       const newBlocks = blocks.filter((block) => block.id !== id);
       localStorage.setItem("blocks", JSON.stringify(newBlocks));
       setBlocks(newBlocks);
+      setSelectedBlocks(
+        selectedBlocks.filter((selectedId) => selectedId !== id)
+      );
     }
   };
 
@@ -50,6 +54,22 @@ function BlockLibrary() {
 
   const handleCancelEditBlock = () => {
     setEditingBlock(null);
+  };
+
+  const toggleSelectBlock = (id) => {
+    setSelectedBlocks((prev) =>
+      prev.includes(id)
+        ? prev.filter((selectedId) => selectedId !== id)
+        : [...prev, id]
+    );
+  };
+
+  const toggleSelectAll = () => {
+    if (selectedBlocks.length === blocks.length) {
+      setSelectedBlocks([]);
+    } else {
+      setSelectedBlocks(blocks.map((b) => b.id));
+    }
   };
 
   return (
@@ -72,6 +92,9 @@ function BlockLibrary() {
           blocks={blocks}
           onDelete={handleDeleteBlock}
           onEdit={handleStartEditBlock}
+          selectedBlocks={selectedBlocks}
+          onToggleSelect={toggleSelectBlock}
+          onToggleSelectAll={toggleSelectAll}
         />
       </div>
     </div>
