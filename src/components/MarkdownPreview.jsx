@@ -1,15 +1,12 @@
-import MarkdownIt from "markdown-it";
+import { marked } from "marked";
 
-const md = new MarkdownIt({
-    html: true,
-    linkify: true,
-    typographer: true,
-    breaks: true
+marked.use({
+    breaks: true,
 });
 
 export default function MarkdownPreview({ content }) {
 
-    const rendered = md.render(content || "");
+    const rendered = marked.parse(content || "");
 
     return (
         <div className="flex flex-col h-full">

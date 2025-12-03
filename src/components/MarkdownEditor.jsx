@@ -5,7 +5,7 @@ export default function MarkdownEditor() {
     const [text, setText] = useState("");
 
     return (
-        <div className="w-full bg-slate-950 text-slate-100 p-6">
+        <div className="w-full min-h-screen bg-slate-950 text-slate-100 p-6">
             <div className="max-w-6xl mx-auto h-full grid grid-cols-1 lg:grid-cols-2 gap-6">
 
                 <div className="flex flex-col h-full">
