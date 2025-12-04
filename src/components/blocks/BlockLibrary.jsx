@@ -1,12 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import BlockForm from "./BlockForm";
 import BlockList from "./BlockList";
 import BlockEdit from "./BlockEdit";
+import { importBlocks } from "./utils/importBlocks";
 
 function BlockLibrary() {
   const [blocks, setBlocks] = useState([]);
   const [editingBlock, setEditingBlock] = useState(null);
   const [selectedBlocks, setSelectedBlocks] = useState([]);
+  const fileInputRef = useRef(null);
 
   useEffect(() => {
     const saved = localStorage.getItem("blocks");
@@ -72,9 +74,44 @@ function BlockLibrary() {
     }
   };
 
+  const handleImportBlocks = (importedBlocks) => {
+    const newBlocks = [...blocks, ...importedBlocks];
+    setBlocks(newBlocks);
+    localStorage.setItem("blocks", JSON.stringify(newBlocks));
+  };
+
+  const handleImportClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      importBlocks(file, handleImportBlocks);
+      e.target.value = "";
+    }
+  };
+
   return (
     <div className="max-w-5xl mx-auto p-6">
-      <h1 className="text-3xl font-bold mb-6">Mes blocs personnalisés</h1>
+      <div className="flex items-center justify-between mb-6">
+        <h1 className="text-3xl font-bold">Mes blocs personnalisés</h1>
+
+        <button
+          onClick={handleImportClick}
+          className="px-6 py-2 rounded-md text-sm transition-colors bg-blue-600 text-white hover:bg-blue-700"
+        >
+          📥 Importer des blocs
+        </button>
+
+        <input
+          ref={fileInputRef}
+          type="file"
+          accept=".part.mdlc,.parts.mdlc"
+          onChange={handleFileChange}
+          className="hidden"
+        />
+      </div>
 
       {editingBlock ? (
         <BlockEdit
