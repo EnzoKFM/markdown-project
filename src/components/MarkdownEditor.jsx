@@ -1,8 +1,29 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import MarkdownPreview from "./MarkdownPreview";
+import { useBlockShortcuts } from "../hooks/useBlockShortcuts";
 
 export default function MarkdownEditor() {
     const [text, setText] = useState("");
+    const [blocks, setBlocks] = useState([]);
+    const textareaRef = useRef(null);
+
+    useEffect(() => {
+        const blocks = localStorage.getItem("blocks");
+
+        setBlocks(JSON.parse(blocks));
+    }, []);
+
+    function insert(content) {
+      const textarea = textareaRef.current;      
+
+      const start = textarea.selectionStart;
+      const end = textarea.selectionEnd;
+
+      setText((prev) => prev.slice(0, start) + content + prev.slice(end));
+
+    }
+
+    useBlockShortcuts(blocks, insert);
 
     return (
         <div className="w-full min-h-screen bg-slate-950 text-slate-100 p-6">
@@ -12,6 +33,7 @@ export default function MarkdownEditor() {
                     <h2 className="text-xl font-semibold mb-4">Markdown</h2>
 
                     <textarea
+                        ref={textareaRef}
                         value={text}
                         onChange={(e) => setText(e.target.value)}
                         placeholder="# Markdown..."

@@ -12,6 +12,12 @@ function Header() {
       >
         Blocs personnalisés
       </Link>
+      <Link
+        to="/markdown"
+        className="text-blue-600 hover:text-blue-800 underline"
+      >
+        Markdown
+      </Link>
     </nav>
   );
 }
