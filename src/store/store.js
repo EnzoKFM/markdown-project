@@ -1,11 +1,8 @@
-import { configureStore } from "@reduxjs/toolkit";
-import imagesReducer from "./imageSlice";
+import blocksReducer from "./slices/blocksSlice";
 
-const store = configureStore({
+export const store = configureStore({
   reducer: {
+    blocks: blocksReducer,
     images: imagesReducer,
   },
 });
-
-
-export default store;
