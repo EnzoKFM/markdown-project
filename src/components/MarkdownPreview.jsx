@@ -9,7 +9,7 @@ export default function MarkdownPreview({ content }) {
     const rendered = marked.parse(content || "");
 
     return (
-        <div className="flex flex-col h-full">
+        <div className="flex flex-col h-[600px]">
             <h2 className="text-xl font-semibold mb-4">Preview</h2>
 
             <div
