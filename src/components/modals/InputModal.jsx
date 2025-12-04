@@ -1,6 +1,5 @@
 import { useState } from 'react';
 
-// Composant Modal réutilisable
 function InputModal({ isOpen, onClose, onSubmit, title = "Entrer une information" }) {
   const [inputValue, setInputValue] = useState('');
 

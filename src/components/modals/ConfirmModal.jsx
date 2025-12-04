@@ -1,5 +1,4 @@
-// Composant Modal réutilisable
-function DeleteModal({ isOpen, onClose, onSubmit }) {
+function ConfirmModal({ isOpen, onClose, onSubmit, title = "Voulez-vous confirmer ?" }) {
 
   const handleConfirm = (e) => {
     e.preventDefault();
@@ -13,7 +12,7 @@ function DeleteModal({ isOpen, onClose, onSubmit }) {
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <div className="bg-white rounded-lg shadow-xl w-full max-w-md mx-4">
         <div className="p-6">
-          <h2 className="text-2xl font-bold mb-4 text-gray-800 justify-center">Voulez-vous vraiment supprimer ?</h2>
+          <h2 className="text-2xl font-bold mb-4 text-gray-800 justify-center">{title}</h2>
             
             <div className="flex gap-3 justify-center">
               <button
@@ -36,4 +35,4 @@ function DeleteModal({ isOpen, onClose, onSubmit }) {
   );
 }
 
-export default DeleteModal
+export default ConfirmModal

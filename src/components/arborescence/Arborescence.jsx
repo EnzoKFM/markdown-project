@@ -1,7 +1,7 @@
 import {useTree} from "../../hooks/useTree.js"
 import {useState} from "react"
 import InputModal from "../modals/InputModal.jsx";
-import DeleteModal from "../modals/DeleteModal.jsx";
+import ConfirmModal from "../modals/ConfirmModal.jsx";
 
 function Arborescence() {
     const [tree, setTree] = useTree('fileTree')
@@ -19,7 +19,6 @@ function Arborescence() {
     }
 
     const addNode = (parentId, nodeType) => {
-
         let newNode = {}
         if(nodeType == "folder"){
             newNode = { id: crypto.randomUUID(), name: 'New Folder', type: 'folder', children: [] }
@@ -147,7 +146,7 @@ function Arborescence() {
         if (newTree.children) {
             newTree.children = newTree.children.filter(deleteNodeRecursive);
         }
-        
+
         setTree(newTree)
         setUsedNodeId(null)
     }
@@ -211,10 +210,11 @@ function Arborescence() {
                 onSubmit={changeName}
                 title="Entrez le nom"
             />
-            <DeleteModal
+            <ConfirmModal
                 isOpen={isDeleteOpen}
                 onClose={() => setIsDeleteOpen(false)}
                 onSubmit={deleteNode}
+                title="Voulez-vous vraiment supprimer ?"
             />
         </section>
     </>
