@@ -1,7 +1,13 @@
 import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { addImage, deleteImage, renameImage, setImages } from "../store/imageSlice";
+
 
 function ImageLibrary() {
-  const [images, setImages] = useState([]);
+  const images = useSelector((state) => state.images.list);
+  const dispatch = useDispatch();
+
+  const [markdown, setMarkdown] = useState("");
   const [editingId, setEditingId] = useState(null);
   const [newName, setNewName] = useState("");
 
@@ -9,7 +15,7 @@ function ImageLibrary() {
   useEffect(() => {
     const saved = localStorage.getItem("images");
     if (saved) {
-      setImages(JSON.parse(saved));
+      dispatch(setImages(JSON.parse(saved)));
     }
   }, []);
 
@@ -62,32 +68,38 @@ function ImageLibrary() {
     const compressedBase64 = await compressBase64(base64);
 
     const newImage = {
-      id: Date.now(),
+      id: crypto.randomUUID(),
       name: file.name,
       data: compressedBase64,
     };
 
-    setImages([...images, newImage]);
+    dispatch(addImage(newImage));
   };
 
   // Fonction pour renommer une image
-  const renameImage = (id) => {
-    setImages(
-      images.map((img) =>
-        img.id === id ? { ...img, name: newName } : img
-      )
-    );
-    setEditingId(null);
-    setNewName("");
-  };
+  const handleRename  = (id) => {
+    dispatch(renameImage({ id, newName }));
+      setEditingId(null);
+      setNewName("");
+    };
 
   // Fonction pour supprimer une image
-  const deleteImage = (id) => {
-    setImages(images.filter((img) => img.id !== id));
+  const handleDelete  = (id) => {
+    dispatch(deleteImage(id));
   };
 
+  const handleDrop = (e) => {
+    e.preventDefault();
+    const imageId = e.dataTransfer.getData("text/plain");
+    const img = images.find((i) => i.id === imageId);
+    if (img) {
+      setMarkdown((prev) => prev + `![${img.name}](img:${img.id})\n`);
+    }
+  };
 
-   // Exporter une image en fichier .img.mdlc (JSON contenant {id,name,data})
+  const handleDragOver = (e) => e.preventDefault();
+
+   // Exporter une image en fichier .img.mdlc
   const exportSingleImage = (img) => {
     try {
       const payload = JSON.stringify({ id: img.id, name: img.name, data: img.data });
@@ -105,7 +117,7 @@ function ImageLibrary() {
     }
   };
 
-  // Exporter toute la bibliothèque en un seul fichier .imgs.mdlc (JSON tableau)
+  // Exporter toute la bibliothèque en un seul fichier .imgs.mdlc
   const exportAllImages = () => {
     try {
       const payload = JSON.stringify(images);
@@ -122,7 +134,7 @@ function ImageLibrary() {
     }
   };
 
-  // Importer depuis fichier .img.mdl (single) ou .imgs.mdlc (collection)
+  // Importer depuis fichier .img.mdlc (single) ou .imgs.mdlc (collection)
   const importFromSpecificFile = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -139,7 +151,7 @@ function ImageLibrary() {
       const normalized = parsed
         .filter((it) => it && it.data) // filtre les éléments invalides
         .map((it) => ({
-          id: Date.now() ,
+          id: crypto.randomUUID(),
           name: it.name || "imported-image",
           data: it.data,
         }));
@@ -147,7 +159,7 @@ function ImageLibrary() {
       if (normalized.length === 0) {
         alert("Aucune image valide trouvée dans le fichier.");
       } else {
-        setImages((prev) => [...prev, ...normalized]);
+        normalized.forEach(img => dispatch(addImage(img)));
         alert(`${normalized.length} image(s) importée(s).`);
       }
     } catch (err) {
@@ -192,25 +204,27 @@ function ImageLibrary() {
 
       <div style={{ display: "flex", gap: "10px", marginTop: "20px", flexWrap: "wrap" }}>
         {images.map((img) => (
-          <div key={img.id} style={{ textAlign: "center" }}>
+          <div key={img.id} style={{ textAlign: "center" }}  draggable onDragStart={(e) => { e.dataTransfer.setData("text/plain", img.id); e.dataTransfer.effectAllowed = "move"; }}>
               <img src={img.data} alt={img.name} width="150" style={{ border: "1px solid #ccc", padding: "5px" }} />
 
               {editingId === img.id ? (
               <div style={{ marginTop: "5px" }}>
                   <input type="text" value={newName} onChange={(e) => setNewName(e.target.value)} autoFocus style={{ width: "140px" }}/>
-                  <button onClick={() => renameImage(img.id)} style={{ marginLeft: "5px", cursor: "pointer" }} > ✔ </button>
+                  <button onClick={() => handleRename(img.id)} style={{ marginLeft: "5px", cursor: "pointer" }} > ✔ </button>
               </div>
               ) : (
               <div style={{ marginTop: "5px" }}>
                   <span>{img.name}</span>
                   <button onClick={() => { setEditingId(img.id); setNewName(img.name); }} style={btnStyle} > ✏️ </button>
-                  <button onClick={() => deleteImage(img.id)} style={btnStyle} > 🗑️ </button>
+                  <button onClick={() => handleDelete(img.id)} style={btnStyle} > 🗑️ </button>
                   <button onClick={() => exportSingleImage(img)} title="Exporter cette image (.img.mdl)" style={btnStyle}>📤</button>
               </div>
               )}
           </div>
         ))}
       </div>
+      <h2>Markdown</h2>
+      <textarea value={markdown} onChange={(e) => setMarkdown(e.target.value)} onDrop={handleDrop} onDragOver={handleDragOver} rows={10} style={{ width: "100%", padding: "10px", fontFamily: "monospace", marginTop: "10px" }} />
     </div>
   );
 }
