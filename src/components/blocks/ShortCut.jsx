@@ -3,10 +3,22 @@ function ShortCut({ shortcut, onChange, blocks, currentBlockId }) {
     console.log("dans handleKeyChange");
     console.log("name", name);
     console.log("value", value);
-    onChange({
-      ...shortcut,
-      [name]: value,
-    });
+
+    // Si on coche une checkbox, on décoche les autres
+    if (value === true) {
+      onChange({
+        ...shortcut,
+        ctrlKey: name === "ctrlKey",
+        altKey: name === "altKey",
+        shiftKey: name === "shiftKey",
+        [name]: value,
+      });
+    } else {
+      onChange({
+        ...shortcut,
+        [name]: value,
+      });
+    }
   };
 
   const handleMainKeyChange = (e) => {
@@ -39,6 +51,11 @@ function ShortCut({ shortcut, onChange, blocks, currentBlockId }) {
       <label className="block text-sm font-medium text-gray-700 mb-3">
         Raccourci clavier (optionnel)
       </label>
+
+      <p className="text-xs text-gray-600 mb-3">
+        Choisissez <strong>un seul</strong> modificateur (Ctrl, Alt ou Shift) +
+        une touche
+      </p>
 
       <div className="flex gap-4 mb-3">
         <label className="flex items-center gap-2 cursor-pointer">

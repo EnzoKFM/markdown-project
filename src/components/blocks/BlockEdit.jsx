@@ -18,21 +18,18 @@ function BlockEdit({ block, onSave, onCancel, blocks = [] }) {
     e.preventDefault();
     if (!name.trim() || !content.trim()) return;
 
-    if (
-      shortcut.key === "" &&
-      (shortcut.ctrlKey || shortcut.altKey || shortcut.shiftKey)
-    ) {
+    // Validation du raccourci
+    const hasModifier =
+      shortcut.ctrlKey || shortcut.altKey || shortcut.shiftKey;
+    const hasKey = shortcut.key !== "";
+
+    if (hasModifier && !hasKey) {
       alert("Vous devez choisir une touche pour le raccourci");
       return;
     }
 
-    if (
-      shortcut.key != "" &&
-      !shortcut.ctrlKey &&
-      !shortcut.altKey &&
-      !shortcut.shiftKey
-    ) {
-      alert("Vous devez choisir un raccourci avec la touche principale");
+    if (hasKey && !hasModifier) {
+      alert("Vous devez choisir un modificateur (Ctrl, Alt ou Shift)");
       return;
     }
 

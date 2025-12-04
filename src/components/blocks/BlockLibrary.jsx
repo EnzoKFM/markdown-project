@@ -3,19 +3,24 @@ import BlockForm from "./BlockForm";
 import BlockList from "./BlockList";
 import BlockEdit from "./BlockEdit";
 import { importBlocks } from "./utils/importBlocks";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addBlock,
+  updateBlock,
+  deleteBlock,
+  setEditingBlock,
+  cancelEditing,
+  toggleSelectBlock,
+  toggleSelectAll,
+  importBlocks as importBlocksAction,
+} from "../../store/slices/blocksSlice";
 
 function BlockLibrary() {
-  const [blocks, setBlocks] = useState([]);
-  const [editingBlock, setEditingBlock] = useState(null);
-  const [selectedBlocks, setSelectedBlocks] = useState([]);
+  const dispatch = useDispatch();
+  const { blocks, editingBlock, selectedBlocks } = useSelector(
+    (state) => state.blocks
+  );
   const fileInputRef = useRef(null);
-
-  useEffect(() => {
-    const saved = localStorage.getItem("blocks");
-    if (saved) {
-      setBlocks(JSON.parse(saved));
-    }
-  }, []);
 
   const handleAddBlock = (data) => {
     const newBlock = {
@@ -26,58 +31,38 @@ function BlockLibrary() {
       createdAt: new Date().toISOString(),
     };
 
-    setBlocks([...blocks, newBlock]);
-    localStorage.setItem("blocks", JSON.stringify([...blocks, newBlock]));
+    dispatch(addBlock(newBlock));
   };
 
   const handleDeleteBlock = (id) => {
     if (confirm("Supprimer ce bloc ?")) {
-      const newBlocks = blocks.filter((block) => block.id !== id);
-      localStorage.setItem("blocks", JSON.stringify(newBlocks));
-      setBlocks(newBlocks);
-      setSelectedBlocks(
-        selectedBlocks.filter((selectedId) => selectedId !== id)
-      );
+      dispatch(deleteBlock(id));
     }
   };
 
   const handleUpdateBlock = (updatedBlock) => {
-    const newBlocks = blocks.map((b) =>
-      b.id === updatedBlock.id ? updatedBlock : b
-    );
-    setBlocks(newBlocks);
-    setEditingBlock(null);
-    localStorage.setItem("blocks", JSON.stringify(newBlocks));
+    dispatch(updateBlock(updatedBlock));
+    dispatch(cancelEditing());
   };
 
   const handleStartEditBlock = (block) => {
-    setEditingBlock(block);
+    dispatch(setEditingBlock(block));
   };
 
   const handleCancelEditBlock = () => {
-    setEditingBlock(null);
+    dispatch(cancelEditing());
   };
 
-  const toggleSelectBlock = (id) => {
-    setSelectedBlocks((prev) =>
-      prev.includes(id)
-        ? prev.filter((selectedId) => selectedId !== id)
-        : [...prev, id]
-    );
+  const handleToggleSelectBlock = (id) => {
+    dispatch(toggleSelectBlock(id));
   };
 
-  const toggleSelectAll = () => {
-    if (selectedBlocks.length === blocks.length) {
-      setSelectedBlocks([]);
-    } else {
-      setSelectedBlocks(blocks.map((b) => b.id));
-    }
+  const handleToggleSelectAll = () => {
+    dispatch(toggleSelectAll());
   };
 
   const handleImportBlocks = (importedBlocks) => {
-    const newBlocks = [...blocks, ...importedBlocks];
-    setBlocks(newBlocks);
-    localStorage.setItem("blocks", JSON.stringify(newBlocks));
+    dispatch(importBlocksAction(importedBlocks));
   };
 
   const handleImportClick = () => {
@@ -130,8 +115,8 @@ function BlockLibrary() {
           onDelete={handleDeleteBlock}
           onEdit={handleStartEditBlock}
           selectedBlocks={selectedBlocks}
-          onToggleSelect={toggleSelectBlock}
-          onToggleSelectAll={toggleSelectAll}
+          onToggleSelect={handleToggleSelectBlock}
+          onToggleSelectAll={handleToggleSelectAll}
         />
       </div>
     </div>
