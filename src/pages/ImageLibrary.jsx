@@ -182,26 +182,26 @@ function ImageLibrary() {
   // Render
   return (
     <div style={{ padding: "20px", border: "2px solid #ddd" }}>
-      <h2>Bibliothèque d'images</h2>
+      <h2>Images Library</h2>
 
       {/* Export all */}
       {images.length > 0 && (
         <>
           <button onClick={exportAllImages} style={{ marginBottom: "10px", padding: "8px 12px", border: "2px solid white", borderRadius: "6px" }}>
-            Exporter toute la bibliothèque (.imgs.mdlc)
+            Export all (.imgs.mdlc)
           </button><br />
         </>
       )}
 
       {/* Import depuis fichier spécifique (.img.mdl ou .imgs.mdlc) */}
       <label htmlFor="importSpecific" style={{ padding: "8px 12px", marginBottom: "10px", border: "2px solid white", borderRadius: "6px", cursor: "pointer", display: "inline-block" }}>
-        Importer (.img.mdl / .imgs.mdlc)
+        Import (.img.mdl / .imgs.mdlc)
       </label>
       <input id="importSpecific" type="file" accept=".img.mdl,.imgs.mdlc,application/json" onChange={importFromSpecificFile} style={{ display: "none" }} /> <br />
 
       {/* Import classique depuis bouton parcourir */}
       <label htmlFor="importImage" style={{ padding: "8px 12px", border: "2px solid white", borderRadius: "6px", cursor: "pointer", display: "inline-block" }}>
-        Choisir une image
+        Choose a image from your desk
       </label>
       <input id="importImage" className="hidden" type="file" accept="image/*"  onChange={handleImport} />
 
