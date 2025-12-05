@@ -88,17 +88,6 @@ function ImageLibrary() {
     dispatch(deleteImage(id));
   };
 
-  const handleDrop = (e) => {
-    e.preventDefault();
-    const imageId = e.dataTransfer.getData("text/plain");
-    const img = images.find((i) => i.id === imageId);
-    if (img) {
-      setMarkdown((prev) => prev + `![${img.name}](img:${img.id})\n`);
-    }
-  };
-
-  const handleDragOver = (e) => e.preventDefault();
-
    // Exporter une image en fichier .img.mdlc
   const exportSingleImage = (img) => {
     try {
