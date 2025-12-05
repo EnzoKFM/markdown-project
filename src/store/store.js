@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import blocksReducer from "./slices/blocksSlice";
-import imagesReducer from "./imageSlice";
+import imagesReducer from "./slices/imageSlice";
 import treeReducer from './slices/treeSlice';
 
 

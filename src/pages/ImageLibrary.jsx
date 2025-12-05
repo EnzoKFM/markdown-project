@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { addImage, deleteImage, renameImage, setImages } from "../store/imageSlice";
+import { addImage, deleteImage, renameImage, setImages } from "../store/slices/imageSlice";
 
 
 function ImageLibrary() {
