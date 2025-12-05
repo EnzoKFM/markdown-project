@@ -12,6 +12,8 @@ const localStorageMiddleware = store => next => action => {
   // Sauvegarder l'état dans localStorage après chaque action
   const state = store.getState();
   localStorage.setItem('fileTree', JSON.stringify(state.tree.tree));
+
+  localStorage.setItem('images', JSON.stringify(state.images.list));
   
   return result;
 };
@@ -20,13 +22,11 @@ const localStorageMiddleware = store => next => action => {
 const loadInitialState = () => {
   try {
     const savedTree = localStorage.getItem('fileTree');
-    if (savedTree) {
-      return {
-        tree: {
-          tree: JSON.parse(savedTree)
-        }
-      };
-    }
+    const savedImages = localStorage.getItem('images');
+    return {
+      tree: { tree: savedTree ? JSON.parse(savedTree) : [] },
+      images: { list: savedImages ? JSON.parse(savedImages) : [] }
+    };
   } catch (error) {
     console.error('Erreur lors du chargement depuis localStorage:', error);
   }
