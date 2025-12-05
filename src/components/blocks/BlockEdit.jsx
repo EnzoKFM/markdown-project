@@ -111,7 +111,7 @@ function BlockEdit({ block, onSave, onCancel, blocks = [] }) {
           />
 
           <div
-            className="w-full h-full px-3 py-2 border border-gray-200 rounded-md bg-slate-800 overflow-auto  prose-slate prose-invert prose-sm max-w-none"
+            className="w-full h-full px-3 py-2 border border-gray-200 rounded-md bg-slate-800 overflow-auto prose prose-slate prose-invert prose-sm max-w-none"
             dangerouslySetInnerHTML={{ __html: getPreview() }}
           ></div>
         </div>
