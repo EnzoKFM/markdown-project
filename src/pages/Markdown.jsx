@@ -60,7 +60,7 @@ export default function Markdown() {
         const id = e.dataTransfer.getData("image-id");
         const name = e.dataTransfer.getData("image-name");
 
-        if (!id) return; // ce n'est pas une image
+        if (!id) return;
 
         const markdown = `![${name}](img:${id})`;
 
