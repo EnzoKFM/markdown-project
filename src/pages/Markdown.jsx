@@ -1,14 +1,13 @@
 import { useState, useRef } from "react";
+import { useDispatch, useSelector, Provider } from "react-redux";
+import { saveNode } from "../store/slices/treeSlice";
+import store from "../store/store";
 import MarkdownEditor from "../components/MarkdownEditor";
 import MarkdownPreview from "../components/MarkdownPreview";
 import MarkdownBlocks from "../components/MarkdownBlocks";
-import { useBlockShortcuts } from "../hooks/useBlockShortcuts";
-import { Provider, useSelector } from "react-redux";
-import store from "../store/store";
 import Arborescence from "../components/arborescence/Arborescence";
-import { saveNode } from "../store/slices/treeSlice";
-import { useDispatch } from "react-redux";
-import ImageLibrary from "./ImageLibrary";
+import ImageLibrary from "../components/ImageLibrary";
+import { useBlockShortcuts } from "../hooks/useBlockShortcuts";
 
 export default function Markdown() {
   const [text, setText] = useState("");
@@ -86,7 +85,7 @@ export default function Markdown() {
   useBlockShortcuts(blocks, insertBlock);
 
   return (
-    <div className="flex w-full min-h-screen bg-slate-950 text-slate-100 p-6">
+    <div className="flex w-full p-6">
       <div className="w-[20%] ">
         <Provider store={store}>
           <Arborescence 

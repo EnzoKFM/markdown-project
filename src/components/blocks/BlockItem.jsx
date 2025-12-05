@@ -22,7 +22,7 @@ function BlockItem({ block, onDelete, onEdit, isSelected, onToggleSelect }) {
   };
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+    <div className="p-6 rounded-lg shadow-sm border border-gray-200">
       <div className="flex items-start gap-4 mb-4">
         <input
           type="checkbox"
@@ -67,11 +67,11 @@ function BlockItem({ block, onDelete, onEdit, isSelected, onToggleSelect }) {
       </div>
 
       <div
-        className="w-full h-full px-3 py-2 border border-gray-200 rounded-md bg-gray-50 overflow-auto prose prose-sm max-w-none"
+        className="w-full h-full px-3 py-2 border border-gray-200 rounded-md overflow-auto prose prose-slate prose-invert prose-sm max-w-none"
         dangerouslySetInnerHTML={{ __html: getPreview(block.content) }}
       ></div>
 
-      <div className="flex gap-4 text-sm text-gray-500">
+      <div className="flex gap-4 text-sm text-gray-500 mt-2">
         <small>
           Créé le :{" "}
           {new Date(block.createdAt).toLocaleDateString("fr-FR", {

@@ -203,25 +203,25 @@ function Arborescence({OnFileClick}) {
 
             {contextMenu.visible && (
             <div
-                className="absolute bg-white shadow-lg border rounded p-2 z-50"
+                className="absolute bg-white shadow-lg border rounded z-50"
                 style={{ top: contextMenu.y, left: contextMenu.x }}
             >
                 <button
-                    className="block px-2 py-1 hover:bg-gray-100 w-full text-left"
+                    className="block w-full text-left p-2 pr-5 text-slate-600 hover:bg-gray-100 cursor-pointer"
                     onClick={() => {
                         handleAddNode(contextMenu.nodeId, 'file');
                         closeContextMenu();
                     }}
                 >📄 New File</button>
                 <button
-                    className="block px-2 py-1 hover:bg-gray-100 w-full text-left"
+                    className="block w-full text-left p-2 pr-5 text-slate-600 hover:bg-gray-100 cursor-pointer"
                     onClick={() => {
                         handleAddNode(contextMenu.nodeId, 'folder');
                         closeContextMenu();
                     }}
                 >📁 New Folder</button>
                 <button
-                    className="block px-2 py-1 hover:bg-gray-100 w-full text-left"
+                    className="block w-full text-left p-2 pr-5 text-slate-600 hover:bg-gray-100 cursor-pointer"
                     onClick={() => {
                         setUsedNodeId(contextMenu.nodeId);
                         setIsEditOpen(true);
@@ -229,7 +229,7 @@ function Arborescence({OnFileClick}) {
                     }}
                 >✏️ Éditer</button>
                 <button
-                    className="block px-2 py-1 hover:bg-gray-100 w-full text-left"
+                    className="block w-full text-left p-2 pr-5 text-slate-600 hover:bg-gray-100 cursor-pointer"
                     onClick={() => {
                         setUsedNodeId(contextMenu.nodeId);
                         setIsDeleteOpen(true);
