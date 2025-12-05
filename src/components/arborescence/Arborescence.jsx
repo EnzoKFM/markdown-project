@@ -209,6 +209,20 @@ function Arborescence({OnFileClick}) {
                 <button
                     className="block px-2 py-1 hover:bg-gray-100 w-full text-left"
                     onClick={() => {
+                        handleAddNode(contextMenu.nodeId, 'file');
+                        closeContextMenu();
+                    }}
+                >📄 New File</button>
+                <button
+                    className="block px-2 py-1 hover:bg-gray-100 w-full text-left"
+                    onClick={() => {
+                        handleAddNode(contextMenu.nodeId, 'folder');
+                        closeContextMenu();
+                    }}
+                >📁 New Folder</button>
+                <button
+                    className="block px-2 py-1 hover:bg-gray-100 w-full text-left"
+                    onClick={() => {
                         setUsedNodeId(contextMenu.nodeId);
                         setIsEditOpen(true);
                         closeContextMenu();
