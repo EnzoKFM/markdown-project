@@ -54,6 +54,24 @@ export default function Markdown() {
     downloadFile(content, filename);
   };
 
+  function handleDrop(e) {
+        e.preventDefault();
+
+        const id = e.dataTransfer.getData("image-id");
+        const name = e.dataTransfer.getData("image-name");
+
+        if (!id) return; // ce n'est pas une image
+
+        // format markdown utilisé par ta bibliothèque
+        const markdown = `![${name}](img:${id})`;
+
+        insertBlock(markdown);
+    }
+
+    function handleDragOver(e) {
+        e.preventDefault();
+    }
+
   const downloadFile = (content, filename) => {
     const blob = new Blob([content], { type: "text/plain" });
     const url = URL.createObjectURL(blob);
@@ -85,7 +103,7 @@ export default function Markdown() {
         <div style={{ visibility: node ? "visible" : "hidden" }}
           className="grid grid-cols-1 lg:grid-cols-3 gap-6"
         >
-          <MarkdownEditor value={text} onChange={saveFile} ref={textareaRef} />
+          <MarkdownEditor value={text} onChange={saveFile} onDrop={handleDrop} onDragOver={handleDragOver} ref={textareaRef} />
 
           <MarkdownPreview content={text} />
 

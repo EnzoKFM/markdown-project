@@ -187,24 +187,27 @@ function ImageLibrary() {
       {/* Export all */}
       {images.length > 0 && (
         <>
-          <button onClick={exportAllImages} style={{ marginBottom: "10px", padding: "8px 12px", borderRadius: "6px" }}>
+          <button onClick={exportAllImages} style={{ marginBottom: "10px", padding: "8px 12px", border: "2px solid white", borderRadius: "6px" }}>
             Exporter toute la bibliothèque (.imgs.mdlc)
           </button><br />
         </>
       )}
 
       {/* Import depuis fichier spécifique (.img.mdl ou .imgs.mdlc) */}
-      <label htmlFor="importSpecific" style={{ padding: "8px 12px", background: "#eee", marginBottom: "10px", borderRadius: "6px", cursor: "pointer", display: "inline-block" }}>
+      <label htmlFor="importSpecific" style={{ padding: "8px 12px", marginBottom: "10px", border: "2px solid white", borderRadius: "6px", cursor: "pointer", display: "inline-block" }}>
         Importer (.img.mdl / .imgs.mdlc)
       </label>
       <input id="importSpecific" type="file" accept=".img.mdl,.imgs.mdlc,application/json" onChange={importFromSpecificFile} style={{ display: "none" }} /> <br />
 
       {/* Import classique depuis bouton parcourir */}
-      <input type="file" accept="image/*" onChange={handleImport} />
+      <label htmlFor="importImage" style={{ padding: "8px 12px", border: "2px solid white", borderRadius: "6px", cursor: "pointer", display: "inline-block" }}>
+        Choisir une image
+      </label>
+      <input id="importImage" className="hidden" type="file" accept="image/*"  onChange={handleImport} />
 
       <div style={{ display: "flex", gap: "10px", marginTop: "20px", flexWrap: "wrap" }}>
         {images.map((img) => (
-          <div key={img.id} style={{ textAlign: "center" }}  draggable onDragStart={(e) => { e.dataTransfer.setData("text/plain", img.id); e.dataTransfer.effectAllowed = "move"; }}>
+          <div key={img.id} style={{ textAlign: "center" }}  draggable onDragStart={(e) => { e.dataTransfer.setData("image-id", img.id); e.dataTransfer.setData("image-name", img.name); }}>
               <img src={img.data} alt={img.name} width="150" style={{ border: "1px solid #ccc", padding: "5px" }} />
 
               {editingId === img.id ? (
@@ -223,8 +226,6 @@ function ImageLibrary() {
           </div>
         ))}
       </div>
-      <h2>Markdown</h2>
-      <textarea value={markdown} onChange={(e) => setMarkdown(e.target.value)} onDrop={handleDrop} onDragOver={handleDragOver} rows={10} style={{ width: "100%", padding: "10px", fontFamily: "monospace", marginTop: "10px" }} />
     </div>
   );
 }
