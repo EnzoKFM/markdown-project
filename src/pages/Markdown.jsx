@@ -62,7 +62,6 @@ export default function Markdown() {
 
         if (!id) return; // ce n'est pas une image
 
-        // format markdown utilisé par ta bibliothèque
         const markdown = `![${name}](img:${id})`;
 
         insertBlock(markdown);
