@@ -35,7 +35,6 @@ export default function Markdown() {
         const end = textarea.selectionEnd;
 
         setText((prev) => prev.slice(0, start) + node.text + prev.slice(end));
-        console.log(text)
     }
 
     function saveFile(content) {

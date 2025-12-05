@@ -132,7 +132,6 @@ const treeSlice = createSlice({
       state.tree.children.push(fileNode)
     },
     saveNode: (state, action) => {
-      console.log(action.payload)
       const {nodeId, content} = action.payload
 
       const updateNode = (node, id) => {

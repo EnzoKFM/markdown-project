@@ -25,10 +25,7 @@ const blocksSlice = createSlice({
 
     // Mettre à jour un bloc existant
     updateBlock: (state, action) => {
-      console.log("Action : ", action);
       const index = state.blocks.findIndex((b) => b.id === action.payload.id);
-
-      console.log("index : ", index);
 
       if (index !== -1) {
         state.blocks[index] = action.payload;

@@ -16,8 +16,6 @@ function BlockForm({ onSubmit, blocks = [] }) {
     e.preventDefault();
     if (!name.trim() || !content.trim()) return;
 
-    console.log(shortcut);
-
     // Validation du raccourci
     const hasModifier =
       shortcut.ctrlKey || shortcut.altKey || shortcut.shiftKey;
