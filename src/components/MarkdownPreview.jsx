@@ -11,7 +11,7 @@ export default function MarkdownPreview({ content }) {
 
     let rendered = marked.parse(content || "");
 
-    // 2. remplacer les <img src="img:ID"> par base64
+    // remplacer les <img src="img:ID"> par base64
     rendered = rendered.replace(
         /<img\s+[^>]*src="img:([^"]+)"[^>]*>/g,
         (match, id) => {
