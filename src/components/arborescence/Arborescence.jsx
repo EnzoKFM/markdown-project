@@ -4,7 +4,7 @@ import { addNode, moveNode, changeName, deleteNode, importNode } from "../../sto
 import InputModal from "../modals/InputModal.jsx";
 import ConfirmModal from "../modals/ConfirmModal.jsx";
 
-function Arborescence() {
+function Arborescence({OnFileClick}) {
     const tree = useSelector((state) => state.tree.tree);
     const dispatch = useDispatch();
 
@@ -146,7 +146,7 @@ function Arborescence() {
                                 if (isFolder) {
                                     toggleFolder(node.id)
                                 } else {
-                                    console.log("Informations du fichier : ", node.text);
+                                    OnFileClick(node)
                                 };
                             }}
                         >
@@ -165,7 +165,7 @@ function Arborescence() {
 
     return (
         <>
-            <section className="p-4">
+            <section className="">
                 <h1 className="text-3xl font-bold">Arborescence</h1>
                 <div className="flex gap-4">
                     <button className="cursor-pointer" onClick={() => handleAddNode('root', 'file')}>📄 File</button>

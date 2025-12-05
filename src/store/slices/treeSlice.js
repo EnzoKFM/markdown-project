@@ -130,9 +130,26 @@ const treeSlice = createSlice({
       const fileNode = action.payload.fileNode
 
       state.tree.children.push(fileNode)
+    },
+    saveNode: (state, action) => {
+      console.log(action.payload)
+      const {nodeId, content} = action.payload
+
+      const updateNode = (node, id) => {
+        if (node.id === id) {
+          node.text = content
+        };
+        for (const child of node.children || []) {
+          const found = updateNode(child, id);
+          if (found) return found;
+        }
+        return null;
+      };
+
+      updateNode(state.tree, nodeId)
     }
   }
 });
 
-export const { setTree, addNode, moveNode, changeName, deleteNode, importNode } = treeSlice.actions;
+export const { setTree, addNode, moveNode, changeName, deleteNode, importNode, saveNode } = treeSlice.actions;
 export default treeSlice.reducer;
