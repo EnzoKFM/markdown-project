@@ -47,12 +47,12 @@ function ShortCut({ shortcut, onChange, blocks, currentBlockId }) {
   });
 
   return (
-    <div className="mb-4 p-4 border border-gray-200 rounded-md bg-gray-50">
-      <label className="block text-sm font-medium text-gray-700 mb-3">
-        Raccourci clavier (optionnel)
+    <div className="mb-4 p-4 border border-gray-200 rounded-md bg-slate-800">
+      <label className="block text-sm font-medium text-gray-300 mb-3">
+        Raccourci clavier
       </label>
 
-      <p className="text-xs text-gray-600 mb-3">
+      <p className="text-xs text-gray-300 mb-3">
         Choisissez <strong>un seul</strong> modificateur (Ctrl, Alt ou Shift) +
         une touche
       </p>
@@ -89,11 +89,11 @@ function ShortCut({ shortcut, onChange, blocks, currentBlockId }) {
         </label>
 
         <div className="mb-3">
-          <label className="block text-sm text-gray-600 mb-1">Touche :</label>
+          <label className="block text-sm mb-1">Touche :</label>
           <select
             value={shortcut?.key || ""}
             onChange={handleMainKeyChange}
-            className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="px-3 py-2 bg-slate-800 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
             <option value="">Aucune</option>
             {/* Lettres A-Z */}
@@ -116,8 +116,8 @@ function ShortCut({ shortcut, onChange, blocks, currentBlockId }) {
 
       {currentShortCut && (
         <div className="mb-2">
-          <span className="text-sm text-gray-600">Aperçu : </span>
-          <span className="text-sm font-mono font-semibold bg-white px-2 py-1 rounded border border-gray-300">
+          <span className="text-sm text-gray-300">Aperçu : </span>
+          <span className="text-sm font-mono font-semibold px-2 py-1 rounded border border-gray-300">
             {currentShortCut}
           </span>
         </div>

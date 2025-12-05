@@ -1,8 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import Blocks from "../pages/Blocks";
 import Markdown from "../pages/Markdown";
-import ImageLibrary from "../pages/ImageLibrary";
-import Home from "../pages/Home";
 import Layout from "../pages/Layout";
 import Error404 from "../pages/Error404";
 
@@ -18,14 +16,6 @@ const router = createBrowserRouter([
       {
         path: "blocks",
         Component: Blocks,
-      },
-      {
-        path: "markdown",
-        Component: Markdown,
-      },
-      {
-        path: "image-library",
-        Component: ImageLibrary,
       },
       {
         path: "*",
