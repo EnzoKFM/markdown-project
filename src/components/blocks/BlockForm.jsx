@@ -70,12 +70,12 @@ function BlockForm({ onSubmit, blocks = [] }) {
   return (
     <form
       onSubmit={handleSubmit}
-      className="bg-white p-6 rounded-lg shadow-sm mb-8 border border-gray-200"
+      className="p-6 rounded-lg shadow-sm mb-8 border border-gray-200"
     >
       <h2 className="text-xl font-semibold mb-4">Nouveau bloc personnalisé</h2>
 
       <div className="mb-4">
-        <label className="block text-sm font-medium text-gray-700 mb-2">
+        <label className="block text-sm font-medium text-gray-300 mb-2">
           Nom
         </label>
         <input
@@ -95,23 +95,21 @@ function BlockForm({ onSubmit, blocks = [] }) {
       />
 
       <div className="mb-4">
-        <label className="block text-sm font-medium text-gray-700 mb-2">
+        <label className="block text-sm font-medium text-gray-300 mb-2">
           Contenu
         </label>
 
         <div className="grid grid-cols-2 gap-4">
-          <div>
-            <textarea
-              value={content}
-              onChange={(e) => setContent(e.target.value)}
-              placeholder="Contenu markdown et/ou HTML..."
-              rows={12}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md font-mono text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 resize-y"
-            />
-          </div>
+          <textarea
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+            placeholder="Contenu markdown et/ou HTML..."
+            rows={12}
+            className="w-full px-3 py-2 border border-gray-300 rounded-md font-mono text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 resize-y"
+          />
 
           <div
-            className="w-full h-full px-3 py-2 border border-gray-200 rounded-md bg-gray-50 overflow-auto prose prose-sm max-w-none"
+            className="w-full h-full px-3 py-2 border border-gray-200 rounded-md overflow-auto prose prose-sm max-w-none"
             dangerouslySetInnerHTML={{ __html: getPreview() }}
           ></div>
         </div>
