@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { addNode, moveNode, changeName, deleteNode, importNode } from "../../store/slices/treeSlice.js";
 import InputModal from "../modals/InputModal.jsx";
 import ConfirmModal from "../modals/ConfirmModal.jsx";
+import Button from "../Button.jsx";
 
 function Arborescence({OnFileClick}) {
     const tree = useSelector((state) => state.tree.tree);
@@ -168,10 +169,10 @@ function Arborescence({OnFileClick}) {
             <section className="">
                 <h1 className="text-3xl font-bold">Arborescence</h1>
                 <div className="flex gap-4">
-                    <button className="cursor-pointer" onClick={() => handleAddNode('root', 'file')}>📄 File</button>
-                    <button className="cursor-pointer" onClick={() => handleAddNode('root', 'folder')}>📁 Folder</button>
+                    <Button variant="transparent" onClick={() => handleAddNode('root', 'file')}>📄 File</Button>
+                    <Button variant="transparent" onClick={() => handleAddNode('root', 'folder')}>📁 Folder</Button>
 
-                    <label className="cursor-pointer" htmlFor="file">📥 Import</label>
+                    <label className="h-10 px-4 py-2 rounded-md text-sm cursor-pointer bg-transparent text-slate-300 hover:bg-slate-800" htmlFor="file">📥 Import</label>
                     <input id="file" className="hidden" type="file" accept=".md" onChange={handleImportFile} />
                 </div>
                 

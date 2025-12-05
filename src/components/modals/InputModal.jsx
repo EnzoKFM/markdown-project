@@ -16,9 +16,9 @@ function InputModal({ isOpen, onClose, onSubmit, title = "Entrer une information
 
   return (
     <div className="fixed inset-0 bg-gray-700/40 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg shadow-xl w-full max-w-md mx-4">
+      <div className="bg-slate-800 rounded-lg shadow-xl w-full max-w-md mx-4">
         <div className="p-6">
-          <h2 className="text-2xl font-bold mb-4 text-gray-800">{title}</h2>
+          <h2 className="text-2xl font-bold mb-4">{title}</h2>
           
           <form onSubmit={handleSubmit}>
             <input

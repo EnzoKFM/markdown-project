@@ -7,6 +7,7 @@ import MarkdownPreview from "../components/MarkdownPreview";
 import MarkdownBlocks from "../components/MarkdownBlocks";
 import Arborescence from "../components/arborescence/Arborescence";
 import ImageLibrary from "../components/ImageLibrary";
+import Button from "../components/Button";
 import { useBlockShortcuts } from "../hooks/useBlockShortcuts";
 
 export default function Markdown() {
@@ -95,7 +96,7 @@ export default function Markdown() {
       <div className="w-[80%] mx-auto">
         <div className="flex justify-between ">
           <h1 className="text-3xl font-bold mb-6">Éditeur Markdown</h1>
-          <button className="cursor-pointer" onClick={exportNode}>📤 Export</button>
+          <Button onClick={exportNode}>📤 Export</Button>
         </div>
 
         <div style={{ visibility: node ? "visible" : "hidden" }}
