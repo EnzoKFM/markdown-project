@@ -105,11 +105,11 @@ function BlockForm({ onSubmit, blocks = [] }) {
             onChange={(e) => setContent(e.target.value)}
             placeholder="Contenu markdown et/ou HTML..."
             rows={12}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md font-mono text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 resize-y"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md bg-slate-900 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 resize-y"
           />
 
           <div
-            className="w-full h-full px-3 py-2 border border-gray-200 rounded-md overflow-auto prose prose-slate prose-invert prose-sm max-w-none"
+            className="w-full h-full px-3 py-2 border border-gray-200 rounded-md bg-slate-900 overflow-auto prose prose-slate prose-invert prose-sm max-w-none"
             dangerouslySetInnerHTML={{ __html: getPreview() }}
           ></div>
         </div>
