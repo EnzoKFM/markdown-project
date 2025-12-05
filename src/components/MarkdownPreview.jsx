@@ -16,7 +16,7 @@ export default function MarkdownPreview({ content }) {
         /<img\s+[^>]*src="img:([^"]+)"[^>]*>/g,
         (match, id) => {
             const img = images.find(i => i.id === id);
-            if (!img) return match; // image inconnue → on laisse tel quel
+            if (!img) return match; 
 
             return `<img src="${img.data}" alt="${img.name}" />`;
         }
